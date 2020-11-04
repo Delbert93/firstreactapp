@@ -1,8 +1,8 @@
+/** @jsxImportSource @emotion/core */
 import React from 'react';
+import { css, jsx } from '@emotion/core';
 import { Header } from './Header';
 import { HomePage } from './HomePage';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 
 const App = () => {
   return (
