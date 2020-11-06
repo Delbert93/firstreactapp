@@ -5,13 +5,14 @@ import { css, jsx } from '@emotion/core';
 import { QuestionData } from './QuestionData';
 import { gray2, gray3 } from './Styles';
 
+
 interface Props {
     data: QuestionData;
-    showContent: boolean;
+    showContent?: boolean;
 }
 
 
-export const Question: FC<Props> = ({ data, showContent  }) => (
+export const Question: FC<Props> = ({ data, showContent = true  }) => (
 <div
     css=
     {
