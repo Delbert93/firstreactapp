@@ -3,14 +3,15 @@ import React from 'react';
 import { css, jsx } from '@emotion/core';
 import { Header } from './Header';
 import { HomePage } from './HomePage';
+import { fontFamily, fontSize, gray2 } from './Styles';
 
 const App = () => {
   return (
     <div
       css={css`
-        font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
-        font-size: 16px;
-        color: #5c5a5a;
+        font-family: ${fontFamily};    
+        font-size: ${fontSize};    
+        color: ${gray2};
       `}
     >
       <Header />
