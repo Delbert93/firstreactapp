@@ -7,6 +7,7 @@ import { SearchPage } from './SearchPage';
 import { SignInPage } from './SignInPage';
 import { Header } from './Header';
 import { HomePage } from './HomePage';
+import { NotFoundPage } from './NotFoundPage';
 import { fontFamily, fontSize, gray2 } from './Styles';
 
 const App = () => {
@@ -20,12 +21,14 @@ const App = () => {
         `}
       >
         <Header />
+        {/* Order in the switch matters. It will display what it finds first */}
         <Switch>
           <Redirect from="/home" to="/" />
           <Route exact path="/" component={HomePage} />
           <Route path="/search" component={SearchPage}/>
           <Route path="/ask" component={AskPage}/>
           <Route path="/signin" component={SignInPage}/>
+          <Route component={NotFoundPage} />
         </Switch>
       </div>
     </BrowserRouter>
