@@ -1,18 +1,25 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/core */
 import { css, jsx } from '@emotion/core';
 import { PrimaryButton } from './Styles';
 import { QuestionList } from './QuestionList';
-import { getUnansweredQuestions } from './QuestionData';
+import { getUnansweredQuestions, QuestionData  } from './QuestionData';
 import { Page } from './Page';
 import { PageTitle } from './PageTitle';
 
 
 export const HomePage = () => {
+  const [questions, setQuestions] = useState<QuestionData[] | null>(null);
+  const [questionsLoading, setQuestionsLoading] = useState(true);
   useEffect(() => {
-    console.log('first rendered');
-    }, []);
+    const doGetUnansweredQuestions = async () => {
+      const unansweredQuestions = await getUnansweredQuestions();
+      setQuestions(unansweredQuestions);
+      setQuestionsLoading(false);
+    };
+    doGetUnansweredQuestions();
+  });
   return (
     <Page>
       <div
@@ -48,7 +55,18 @@ export const HomePage = () => {
           </h2>
           <PrimaryButton>Ask a question</PrimaryButton>
         </div>
-        {/* <QuestionList data={getUnansweredQuestions()} /> */}
+        {questionsLoading ? (
+          <div
+            css={css`
+              font-size: 16px;
+              font-style: italic;
+            `}
+          >
+            Loading...
+          </div>
+        ) : (
+          <QuestionList data={questions || []} />
+        )}
       </div>
     </Page>
   );
