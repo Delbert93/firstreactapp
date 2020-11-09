@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { UserIcon } from './Icons';
 /** @jsxImportSource @emotion/core */
 import { css, jsx } from '@emotion/core';
 import { fontFamily, fontSize, gray1, gray2, gray5 } from './Styles';
 
-export const Header = () => (
+export const Header = () => {
+    const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.currentTarget.value);
+    };
+    return(
     <div
         css={css`
             position: fixed;
@@ -28,7 +32,9 @@ export const Header = () => (
               text-decoration: none;
             `}
         >Q & A</a>
-        <input type="text" placeholder="Search..." 
+        <input type="text" 
+            placeholder="Search..." 
+            onChange={handleSearchInputChange}
             css={css`
                 box-sizing: border-box;
                 font-family: ${fontFamily};
@@ -66,4 +72,4 @@ export const Header = () => (
             <span>Sign In</span></a>
     </div>
   );
-
+};
