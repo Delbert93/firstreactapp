@@ -1,1 +1,1 @@
-npm install && npm start
+ npm install @types/react-router-dom --save-dev && npm install react-router-dom && npm install && npm start
