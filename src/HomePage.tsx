@@ -11,7 +11,6 @@ import { PageTitle } from './PageTitle';
 
 export const HomePage = () => {
   const [questions, setQuestions] = useState<QuestionData[] | null>(null);
-  
   const [questionsLoading, setQuestionsLoading] = useState(true);
   
   useEffect(() => {
