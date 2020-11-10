@@ -2,6 +2,7 @@ import React, { FC, useState, Fragment, useEffect } from 'react';
 import { Page } from './Page';
 import { RouteComponentProps } from 'react-router-dom';
 import { QuestionData, getQuestion } from './QuestionData';
+import { AnswerList } from './AnswerList';
 /** @jsxImportSource @emotion/core */
 import { css, jsx } from '@emotion/core';
 import { gray3, gray6 } from './Styles';
@@ -68,6 +69,7 @@ export const QuestionPage: FC <RouteComponentProps<RouteParams>> = (
             ${question.created.toLocaleDateString()} 
             ${question.created.toLocaleTimeString()}`}
               </div>
+              <AnswerList data={question.answers} />
             </Fragment>
           )}
         </div>
