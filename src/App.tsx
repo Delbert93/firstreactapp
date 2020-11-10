@@ -8,6 +8,7 @@ import { SignInPage } from './SignInPage';
 import { Header } from './Header';
 import { HomePage } from './HomePage';
 import { NotFoundPage } from './NotFoundPage';
+import { QuestionPage } from './QuestionPage';
 import { fontFamily, fontSize, gray2 } from './Styles';
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
           <Route exact path="/" component={HomePage} />
           <Route path="/search" component={SearchPage}/>
           <Route path="/ask" component={AskPage}/>
+          <Route path="/questions/:questionId" component={QuestionPage} />
           <Route path="/signin" component={SignInPage}/>
           <Route component={NotFoundPage} />
         </Switch>
