@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { SearchPage } from './SearchPage';
 import { SignInPage } from './SignInPage';
-import { Header } from './Header';
+import { HeaderWithRouter as Header } from './Header';
 import { HomePage } from './HomePage';
 import { NotFoundPage } from './NotFoundPage';
 import { QuestionPage } from './QuestionPage';
