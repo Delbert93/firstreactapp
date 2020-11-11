@@ -66,8 +66,8 @@ export const minLength: Validator = (
   value: any,
   length: number,
 ): string =>
-  value && value.length < length 
-    ? 'This must be at least ${length} characters'
+  value && value.length < length
+    ? `This must be at least ${length} characters`
     : '';
 
 

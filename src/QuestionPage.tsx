@@ -3,7 +3,7 @@ import { Page } from './Page';
 import { RouteComponentProps } from 'react-router-dom';
 import { QuestionData, getQuestion } from './QuestionData';
 import { AnswerList } from './AnswerList';
-import { Form } from './Form';
+import { Form, required, minLength } from './Form';
 import { Field } from './Field';
 /** @jsxImportSource @emotion/core */
 import { css, jsx } from '@emotion/core';
@@ -78,7 +78,14 @@ export const QuestionPage: FC <RouteComponentProps<RouteParams>> = (
                   margin-top: 20px;
                 `}
               >
-                <Form submitCaption="Submit Your Answer">
+                <Form submitCaption="Submit Your Answer"
+                  validationRules={{
+                    content: [
+                      { validator: required },
+                      { validator: minLength, arg: 50 }
+                    ]
+                  }}
+                >
                   <Field name="content" label="Your Answer" type="TextArea" />
                 </Form>
               </div>
