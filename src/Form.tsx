@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, createContext } from 'react';
 import { PrimaryButton, gray5, gray6 } from './Styles';
 /** @jsxImportSource @emotion/core */
 import { css, jsx } from '@emotion/core';
@@ -11,9 +11,29 @@ interface Props {
     submitCaption?: string;
 }
 
+
+interface FormContextProps {
+  values: Values;
+  setValue?: (fieldName: string, value: any) => void;
+}
+
+
+export const FormContext = createContext<FormContextProps>({
+  values: {},
+})
+
+
 export const Form: FC<Props> = ({ submitCaption, children }) => {
     const [values, setValues] = useState<Values>({});
     return (
+      <FormContext.Provider
+        value={{
+          values, 
+          setValue: (fieldName: string, value: any) => {
+            setValues({ ...value, [fieldName]: value });
+          },
+        }}
+      >
         <form noValidate={true}>
           <fieldset
             css={css`
@@ -40,5 +60,7 @@ export const Form: FC<Props> = ({ submitCaption, children }) => {
             </div>
           </fieldset>
         </form>
+      </FormContext.Provider>
+        
       );      
   };

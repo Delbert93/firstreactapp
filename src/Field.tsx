@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, ChangeEvent } from 'react';
+import { FormContext } from './Form';
 /** @jsxImportSource @emotion/core */
 import { css, jsx } from '@emotion/core';
 import { fontFamily, fontSize, gray5, gray2, gray6 } from './Styles';
@@ -31,41 +32,68 @@ const baseCSS = css`
 `;
 
 
-export const Field: FC<Props> = ({
-    name,
-    label,
-    type = 'Text',
-  }) => (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 15px;
-      `}
-    >
-      {label && (
-        <label
-          css={css`
-            font-weight: bold;
-          `}
-          htmlFor={name}
-        >
-          {label}
-        </label>
-      )}
-      {(type === 'Text' || type === 'Password') && (
-          <input type={type.toLowerCase()} id={name} css={baseCSS} />
-      )}
-      {type === 'TextArea' && (
-          <textarea 
-            id={name}
+export const Field: FC<Props> = ({name, label, type = 'Text',}) => {
+  const { setValue } = useContext(FormContext);
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> |
+    ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    if(setValue){
+      setValue(name, e.currentTarget.value);
+    }
+  };
+  return(
+  <FormContext.Consumer>
+    {({ values }) => (
+      <div
+        css={css`
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 15px;
+        `}
+      >
+        {label && (
+          <label
             css={css`
-                ${baseCSS};
-                height: 100px;
+              font-weight: bold;
             `}
-          />
-      )}
-    </div>
+            htmlFor={name}
+          >
+            {label}
+          </label>
+        )}
+        {(type === 'Text' || type === 'Password') && (
+            <input 
+              type={type.toLowerCase()} 
+              id={name} 
+              value={
+                values[name] === undefined
+                // If value or context is undefined we set it to an empty string
+                ? ''
+                : values[name]
+              }
+              onChange={handleChange}
+              css={baseCSS} />
+        )}
+        {type === 'TextArea' && (
+            <textarea 
+              id={name}
+              value={
+                values[name] === undefined
+                ? ''
+                : values[name]
+              }
+              onChange={handleChange}
+              css={css`
+                  ${baseCSS};
+                  height: 100px;
+              `}
+            />
+        )}
+      </div>
+    )}
+    </FormContext.Consumer>
   );
+};
 
 
