@@ -1,9 +1,9 @@
 import React, { FC, useState, Fragment, useEffect } from 'react';
 import { Page } from './Page';
 import { RouteComponentProps } from 'react-router-dom';
-import { QuestionData, getQuestion } from './QuestionData';
+import { QuestionData, getQuestion, postAnswer } from './QuestionData';
 import { AnswerList } from './AnswerList';
-import { Form, required, minLength } from './Form';
+import { Form, required, minLength, Values  } from './Form';
 import { Field } from './Field';
 /** @jsxImportSource @emotion/core */
 import { css, jsx } from '@emotion/core';
@@ -32,66 +32,82 @@ export const QuestionPage: FC <RouteComponentProps<RouteParams>> = (
         }
       }, [match.params.questionId]);
       
-      return <Page>
-        <div
-          css={css`
-            background-color: white;
-            padding: 15px 20px 20px 20px;
-            border-radius: 4px;
-            border: 1px solid ${gray6};
-            box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
-          `}
-        >
+      const handleSubmit = async (values: Values) => {
+        const result = await postAnswer({
+          questionId: question!.questionId,    
+          content: values.content,
+          userName: 'Fred',
+          created: new Date()
+        });
+      
+        return { success: result ? true : false };
+      };
+
+      return (
+        <Page>
           <div
             css={css`
-              font-size: 19px;
-              font-weight: bold;
-              margin: 10px 0px 5px;
+              background-color: white;
+              padding: 15px 20px 20px 20px;
+              border-radius: 4px;
+              border: 1px solid ${gray6};
+              box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
             `}
           >
-            {question === null ? '' : question.title}
-          </div>
-          {question !== null && (
-            <Fragment>
-              <p
-                css={css`
-                  margin-top: 0px;
-                  background-color: white;
-                `}
-              >
-                {question.content}
-              </p>
-              <div
-                css={css`
-                  font-size: 12px;
-                  font-style: italic;
-                  color: ${gray3};
-                `}
-              >
-                {`Asked by ${question.userName} on
-            ${question.created.toLocaleDateString()} 
-            ${question.created.toLocaleTimeString()}`}
-              </div>
-              <AnswerList data={question.answers} />
-              <div
-                css={css`
-                  margin-top: 20px;
-                `}
-              >
-                <Form submitCaption="Submit Your Answer"
-                  validationRules={{
-                    content: [
-                      { validator: required },
-                      { validator: minLength, arg: 50 }
-                    ]
-                  }}
+            <div
+              css={css`
+                font-size: 19px;
+                font-weight: bold;
+                margin: 10px 0px 5px;
+              `}
+            >
+              {question === null ? '' : question.title}
+            </div>
+            {question !== null && (
+              <Fragment>
+                <p
+                  css={css`
+                    margin-top: 0px;
+                    background-color: white;
+                  `}
                 >
-                  <Field name="content" label="Your Answer" type="TextArea" />
-                </Form>
-              </div>
-            </Fragment>
-          )}
-        </div>
-      </Page>;
+                  {question.content}
+                </p>
+                <div
+                  css={css`
+                    font-size: 12px;
+                    font-style: italic;
+                    color: ${gray3};
+                  `}
+                >
+                  {`Asked by ${question.userName} on
+              ${question.created.toLocaleDateString()} 
+              ${question.created.toLocaleTimeString()}`}
+                </div>
+                <AnswerList data={question.answers} />
+                <div
+                  css={css`
+                    margin-top: 20px;
+                  `}
+                >
+                  <Form submitCaption="Submit Your Answer"
+                    validationRules={{
+                      content: [
+                        { validator: required },
+                        { validator: minLength, arg: 50 }
+                      ]
+                    }}
+                    onSubmit={handleSubmit}
+                    failureMessage="There was a problem with your answer"
+                    successMessage="Your answer was successfully submitted"
+                  >
+                    <Field name="content" label="Your Answer" type="TextArea" />
+                  </Form>
+                </div>
+              </Fragment>
+            )}
+          </div>
+        </Page>
+      );
     };
 
