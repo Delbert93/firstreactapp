@@ -117,8 +117,8 @@ export const Form: FC<Props> = ({
     return fieldErrors;
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFontElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if(validateForm()){
       setSubmitting(true);
       setSubmitError(false);
