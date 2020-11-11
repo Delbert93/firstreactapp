@@ -3,9 +3,12 @@ import { Page } from './Page';
 import { RouteComponentProps } from 'react-router-dom';
 import { QuestionData, getQuestion } from './QuestionData';
 import { AnswerList } from './AnswerList';
+import { Form } from './Form';
+import { Field } from './Field';
 /** @jsxImportSource @emotion/core */
 import { css, jsx } from '@emotion/core';
 import { gray3, gray6 } from './Styles';
+
 
 interface RouteParams {
     questionId: string;
@@ -70,6 +73,15 @@ export const QuestionPage: FC <RouteComponentProps<RouteParams>> = (
             ${question.created.toLocaleTimeString()}`}
               </div>
               <AnswerList data={question.answers} />
+              <div
+                css={css`
+                  margin-top: 20px;
+                `}
+              >
+                <Form submitCaption="Submit Your Answer">
+                  <Field name="content" label="Your Answer" type="TextArea" />
+                </Form>
+              </div>
             </Fragment>
           )}
         </div>
